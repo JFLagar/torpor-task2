@@ -1,0 +1,45 @@
+Required Chat Mapper Template Fields for: C:\Users\juan_\Documents\GitHub\Potto\torpor-task2\Assets\Torpor Test Envioroment\DatabaseXML.xml
+
+ACTORS (in this order):
+[1] Name: Text
+[2] Pictures: Files
+[3] Description: Text
+[4] IsPlayer: Boolean
+[5] Articy Id: Text
+[6] Technical Name: Text
+[7] IsNPC: Boolean
+
+ITEMS (in this order):
+[1] Name: Text
+[2] Pictures: Files
+[3] Description: Text
+[4] Is Item: Boolean
+
+LOCATIONS (in this order):
+[1] Name: Text
+[2] Description: Text
+
+USER VARIABLES (in this order):
+[1] Name: Text
+[2] Initial Value: Text
+[3] Description: Text
+
+CONVERSATIONS (in this order):
+[1] Title: Text
+[2] Description: Text
+[3] Actor: Actor
+[4] Conversant: Actor
+[5] Articy Id: Text
+
+DIALOGUE NODES (in this order):
+[1] Title: Text
+[2] Description: Text
+[3] Actor: Actor
+[4] Conversant: Actor
+[5] Menu Text: Text
+[6] Dialogue Text: Text
+[7] Sequence: Text
+[8] canvasRect: Text
+[9] Articy Id: Text
+[10] InputId: Text
+[11] OutputId: Text
