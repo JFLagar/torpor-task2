@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
+using PixelCrushers;
 public class DialogueDataManager : MonoBehaviour
 {
     public Text[] textDisplays;
@@ -14,6 +15,8 @@ public class DialogueDataManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LoadGame();
+
         diceRolls = new float[4];
         for (int i = 0; i < diceRolls.Length ; i++)
         {
@@ -28,7 +31,7 @@ public class DialogueDataManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        rollDificulty = DialogueLua.GetVariable("Roll.Difficulty").asFloat;
     }
     public void DisplayRoll()
     {
@@ -45,7 +48,7 @@ public class DialogueDataManager : MonoBehaviour
         {
             textDisplays[3].text = "Failed";
         }
-   
+        SaveGame();
     }
     public void CheckDiceRolls()
     {
@@ -63,5 +66,17 @@ public class DialogueDataManager : MonoBehaviour
         else
             DialogueLua.SetVariable("Roll.Success", false);
         DisplayRoll();
+    }
+    public void StartNewGame()
+    {
+        SaveSystem.ClearSavedGameData();
+    }
+    public void SaveGame()
+    {
+        SaveSystem.SaveToSlot(0);
+    }
+    public void LoadGame()
+    {
+        SaveSystem.LoadFromSlot(0);
     }
 }
