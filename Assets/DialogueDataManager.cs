@@ -9,6 +9,7 @@ public class DialogueDataManager : MonoBehaviour
 {
     public Button[] buttons;
     public Text[] textDisplays;
+    public Text[] dialogueTexts;
     public float[] diceRolls;
     public float rollDificulty;
     float physMod;
@@ -130,6 +131,29 @@ public class DialogueDataManager : MonoBehaviour
     {
         SaveGame();
         CheckGameStatus();
+    }
+    public void UpdateConversants()
+    {
+        switch(dialogueTexts[0].text)
+        {
+            case "Narrator":
+                dialogueTexts[0].gameObject.SetActive(false);
+                dialogueTexts[1].fontStyle = FontStyle.Italic;
+                break;
+            case "Player":
+                dialogueTexts[1].fontStyle = FontStyle.Normal;
+                dialogueTexts[0].gameObject.SetActive(true);
+                dialogueTexts[0].text = "You:";
+                 break;
+            default:
+                dialogueTexts[0].gameObject.SetActive(true);
+                dialogueTexts[1].fontStyle = FontStyle.Normal;
+                dialogueTexts[0].text = dialogueTexts[0].text + ":";
+                dialogueTexts[1].text = dialogueTexts[0].text + dialogueTexts[1].text;          
+                break;
+
+        }
+        
     }
 }
 [System.Serializable]
