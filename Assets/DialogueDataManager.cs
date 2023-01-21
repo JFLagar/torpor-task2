@@ -4,19 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
 using PixelCrushers;
+using System.IO;
 public class DialogueDataManager : MonoBehaviour
 {
+    public Button[] buttons;
     public Text[] textDisplays;
     public float[] diceRolls;
     public float rollDificulty;
     float physMod;
     float socMod;
     float menMod;
+    public SaveFile saveFile;
+    string savePath;
+    private bool rolled;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        savePath = Application.persistentDataPath + "/saveFile.JSON";
+    }
     void Start()
     {
+        if (!File.Exists(savePath))
+        {
+            File.CreateText(savePath).Close();
+            StartNewGame();
+        }
+        string json = File.ReadAllText(savePath);
+        saveFile = JsonUtility.FromJson<SaveFile>(json);
         LoadGame();
-
+        Debug.Log(DialogueManager.lastConversationID);
         diceRolls = new float[4];
         for (int i = 0; i < diceRolls.Length ; i++)
         {
@@ -25,7 +41,6 @@ public class DialogueDataManager : MonoBehaviour
         physMod = DialogueLua.GetVariable("PlayerStats.Physical").AsFloat;
         socMod = DialogueLua.GetVariable("PlayerStats.Social").AsFloat;
         menMod = DialogueLua.GetVariable("PlayerStats.Mental").AsFloat;
-        CheckDiceRolls();
     }
 
     // Update is called once per frame
@@ -48,7 +63,8 @@ public class DialogueDataManager : MonoBehaviour
         {
             textDisplays[3].text = "Failed";
         }
-        SaveGame();
+        rolled = true;
+        SaveGame(true);
     }
     public void CheckDiceRolls()
     {
@@ -66,17 +82,60 @@ public class DialogueDataManager : MonoBehaviour
         else
             DialogueLua.SetVariable("Roll.Success", false);
         DisplayRoll();
+        CheckGameStatus();
     }
     public void StartNewGame()
     {
-        SaveSystem.ClearSavedGameData();
+        PersistentDataManager.Reset();
+        rolled = false;
+        saveFile.lastConversationId = 0;
+        SaveGame();
     }
-    public void SaveGame()
+    public void SaveGame(bool fromRoll = false)
     {
-        SaveSystem.SaveToSlot(0);
+        saveFile.save = PersistentDataManager.GetSaveData();
+        saveFile.rolled = rolled;
+        saveFile.lastConversationId = DialogueManager.lastConversationID;
+        if (fromRoll)
+            saveFile.lastConversationId = 1;
+        string json = JsonUtility.ToJson(saveFile);
+        File.WriteAllText(savePath, json);
     }
     public void LoadGame()
     {
-        SaveSystem.LoadFromSlot(0);
+        PersistentDataManager.ApplySaveData(saveFile.save);
+        rolled = saveFile.rolled;
+        CheckGameStatus();
     }
+    public void CheckGameStatus()
+    {
+        switch (saveFile.lastConversationId)
+        {
+            case 1:
+                if (!rolled)
+                    buttons[2].gameObject.SetActive(true);
+                else
+                    buttons[1].gameObject.SetActive(true);
+                return;
+            case 2:
+                StartNewGame();
+                buttons[0].gameObject.SetActive(true);
+                return;
+            default:
+                buttons[0].gameObject.SetActive(true);
+                break;
+        }
+    }
+    public void OnConversationEnd()
+    {
+        SaveGame();
+        CheckGameStatus();
+    }
+}
+[System.Serializable]
+public class SaveFile
+{
+    public string save;
+    public bool rolled;
+    public int lastConversationId;
 }

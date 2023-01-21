@@ -669,61 +669,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 457554160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fbafe64f40b0694b8d4ec9c082f8bf1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b39e7a896a4e8e429911f2211cddefc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_prettyPrint: 1
---- !u!114 &457554162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457554160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc03036aad05c334eab057a96938959a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_version: 0
-  m_saveCurrentScene: 1
-  m_framesToWaitBeforeApplyData: 0
-  m_debug: 0
---- !u!114 &457554163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457554160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce15367ff646a9f448ec0e0bce64c2c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storeSaveFilesIn: 0
-  customPath: 
-  encrypt: 0
-  encryptionPassword: My Password
-  m_debug: 0
---- !u!114 &457554164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457554160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 689b4b1238e337d4590a91183947bcd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_key: 
-  m_appendSaverTypeToKey: 0
-  m_saveAcrossSceneChanges: 1
-  m_restoreStateOnStart: 0
-  skipApplyDataAfterFramesIfApplyImmediate: 1
-  saveRawData: 0
+  buttons:
+  - {fileID: 536036864}
+  - {fileID: 1425776420}
+  - {fileID: 709563696}
+  textDisplays:
+  - {fileID: 1655329823}
+  - {fileID: 384850486}
+  - {fileID: 865737181}
+  - {fileID: 537805094}
+  diceRolls: []
+  rollDificulty: 3
+  saveFile:
+    save: 
+    rolled: 0
+    lastConversationId: 0
 --- !u!114 &457554165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,9 +739,9 @@ MonoBehaviour:
     onConversationEnd:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 709563694}
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 457554161}
+          m_MethodName: OnConversationEnd
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -865,7 +828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &536036863
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1344,17 +1307,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1737455892}
-        m_MethodName: CheckDiceRolls
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 709563694}
         m_MethodName: SetActive
         m_Mode: 6
@@ -1366,16 +1318,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1425776418}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 457554161}
+        m_MethodName: CheckDiceRolls
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &709563697
 MonoBehaviour:
@@ -2523,7 +2475,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1737455890}
-  - component: {fileID: 1737455892}
   m_Layer: 5
   m_Name: ButtonsParent
   m_TagString: Untagged
@@ -2553,25 +2504,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1737455892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1737455889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b39e7a896a4e8e429911f2211cddefc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textDisplays:
-  - {fileID: 1655329823}
-  - {fileID: 384850486}
-  - {fileID: 865737181}
-  - {fileID: 537805094}
-  diceRolls: []
-  rollDificulty: 3
 --- !u!1 &1794324101
 GameObject:
   m_ObjectHideFlags: 0
